@@ -1,0 +1,22 @@
+{
+  "name": "poll-y",
+  "version": "1.0.0",
+  "description": "A personal project with the essence of Reddit and BeReal combined\r Every day, moderators release one poll about a topic, to which anyone can respond to",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.0.2",
+    "ejs": "^3.1.10",
+    "express": "^4.20.0",
+    "mongod": "^2.0.0",
+    "mongoose": "^8.6.1",
+    "nodemon": "^3.1.4"
+  }
+}
