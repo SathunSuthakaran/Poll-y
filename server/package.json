@@ -4,7 +4,8 @@
   "description": "A personal project with the essence of Reddit and BeReal combined\r Every day, moderators release one poll about a topic, to which anyone can respond to",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,10 +14,12 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.0.2",
+    "cors": "^2.8.5",
     "ejs": "^3.1.10",
-    "express": "^4.20.0",
+    "express": "^4.21.0",
     "mongod": "^2.0.0",
     "mongoose": "^8.6.1",
     "nodemon": "^3.1.4"
-  }
+  },
+  "devDependencies": {}
 }

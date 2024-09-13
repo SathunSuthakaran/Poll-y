@@ -1,6 +1,23 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
+
+const Register = () => {
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        //👇🏻 Triggers the function
+        signUp();
+        setEmail("");
+        setUsername("");
+        setPassword("");
+    };
+const navigate = useNavigate();
+
 const signUp = () => {
     fetch("http://localhost:4000/api/register", {
         method: "POST",
@@ -15,24 +32,16 @@ const signUp = () => {
     })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data);
+            if (data.error_message) {
+                alert(data.error_message);
+            } else {
+                alert("Account created successfully!");
+                navigate("/");
+            }
         })
         .catch((err) => console.error(err));
 };
-
-const Register = () => {
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log({ username, email, password });
-        setEmail("");
-        setUsername("");
-        setPassword("");
-    };
-
+    
     return (
         <main className='register'>
             <h1 className='registerTitle'>Create an account</h1>

@@ -28,4 +28,4 @@ const Replies = () => {
     );
 };
 
-export default Replies; 
+export default Replies;
