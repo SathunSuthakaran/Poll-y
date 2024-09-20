@@ -21,12 +21,7 @@ app.listen(PORT, () => {
 const users = [];
 //👇🏻 generates a random string as ID
 const generateID = () => Math.random().toString(36).substring(2, 10);
-app.post("/api/create/thread", async (req, res) => {
-    const { thread, userId } = req.body;
-    const threadId = generateID();
 
-    console.log({ thread, userId, threadId });
-});
 app.post("/api/register", async (req, res) => {
     const { email, password, username } = req.body;
     const id = generateID();
@@ -93,3 +88,8 @@ const threadId = generateID();
     });
 });
 
+app.get("/api/all/threads", (req, res) => {
+    res.json({
+        threads: threadList,
+    });
+});
