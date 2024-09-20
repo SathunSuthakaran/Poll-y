@@ -44,3 +44,4 @@ app.post("/api/register", async (req, res) => {
         error_message: "User already exists",
     });
 });
+

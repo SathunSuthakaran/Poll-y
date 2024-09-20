@@ -6,3 +6,5 @@ After responding to the poll, participants can see the poll results and can also
 
 The purpose of this app is to concentrate all viewers onto one poll so that it maximizes engagement
 The goal is to have people talking about the daily poll-y poll, like how people talked about the daily wordle in the past.
+
+MERN tech stack
