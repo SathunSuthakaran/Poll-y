@@ -35,7 +35,7 @@ const Login = () => {
                     alert(data.error_message);
                 } else {
                     alert(data.message);
-                    navigate("/dashboard");
+                    navigate("/poll");
                     localStorage.setItem("_id", data.id);
                 }
             })

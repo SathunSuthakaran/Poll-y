@@ -151,3 +151,20 @@ a {
 	cursor: pointer;
 	border-radius: 3px;
 }
+
+.poll-flex-container {
+	flex-wrap: wrap;
+}
+
+.poll-image-container {
+	display: flex;
+	flex-direction: column;
+	height: 200px;
+	width: 100%;
+}
+
+
+.poll-image {
+
+	object-fit: contain;
+}
