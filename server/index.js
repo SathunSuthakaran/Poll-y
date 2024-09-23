@@ -93,3 +93,56 @@ app.get("/api/all/threads", (req, res) => {
         threads: threadList,
     });
 });
+
+app.post("/api/thread/like", (req, res) => {
+    //👇🏻 accepts the post id and the user id
+    const { threadId, userId } = req.body;
+    //👇🏻 gets the reacted post
+    const result = threadList.filter((thread) => thread.id === threadId);
+    //👇🏻 gets the likes property
+    const threadLikes = result[0].likes;
+    //👇🏻 authenticates the reaction
+    const authenticateReaction = threadLikes.filter((user) => user === userId);
+    //👇🏻 adds the users to the likes array
+    if (authenticateReaction.length === 0) {
+        threadLikes.push(userId);
+        return res.json({
+            message: "You've reacted to the post!",
+        });
+    }
+    //👇🏻 Returns an error user has reacted to the post earlier
+    res.json({
+        error_message: "You can only react once!",
+    });
+});
+
+app.post("/api/thread/replies", (req, res) => {
+    //👇🏻 The post ID
+    const { id } = req.body;
+    //👇🏻 searches for the post
+    const result = threadList.filter((thread) => thread.id === id);
+    //👇🏻 return the title and replies
+    res.json({
+        replies: result[0].replies,
+        title: result[0].title,
+    });
+});
+
+app.post("/api/create/reply", async (req, res) => {
+    //👇🏻 accepts the post id, user id, and reply
+    const { id, userId, reply } = req.body;
+    //👇🏻 search for the exact post that was replied to
+    const result = threadList.filter((thread) => thread.id === id);
+    //👇🏻 search for the user via its id
+    const user = users.filter((user) => user.id === userId);
+    //👇🏻 saves the user name and reply
+    result[0].replies.unshift({
+        userId: user[0].id,
+        name: user[0].username,
+        text: reply,
+    });
+
+    res.json({
+        message: "Response added successfully!",
+    });
+});
