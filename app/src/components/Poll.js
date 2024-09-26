@@ -5,9 +5,12 @@ import Button from './Button';
 
 const Poll = () => {
   return (
+    <div>
+      <h1 class='poll-title'>Poll-y: Who's got your vote?</h1>
     <div className="poll-flex-container">
         <Button image='../assets/Donald_Trump_official_portrait.jpg' content='Donald Trump'/>
-        <Button image='../assets/51pJvuFiZ+L._AC_UF894,1000_QL80_.jpg' content='Kamala Harris'/>
+        <Button image='../assets/V20210305LJ-0043-cropped.webp' content='Kamala Harris'/>
+    </div>
     </div>
   );
 }
