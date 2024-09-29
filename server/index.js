@@ -146,3 +146,15 @@ app.post("/api/create/reply", async (req, res) => {
         message: "Response added successfully!",
     });
 });
+
+A_count = 0
+B_count = 0
+app.post("/api/update_count", async(req, res) => {
+    if (req.body == 'A') {
+        A_count++;
+    }
+    else {
+        B_count++;
+    }
+
+ })
