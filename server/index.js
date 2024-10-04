@@ -150,6 +150,7 @@ app.post("/api/create/reply", async (req, res) => {
 A_count = 0
 B_count = 0
 app.post("/api/update_count", async(req, res) => {
+    console.log(req.body)
     if (req.body == 'A') {
         A_count++;
     }
@@ -158,3 +159,10 @@ app.post("/api/update_count", async(req, res) => {
     }
 
  })
+
+app.post("/api/progress_count", async(req, res) => {
+    res.json({
+        left: A_count,
+        right: B_count
+    });
+});
