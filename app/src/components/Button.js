@@ -6,10 +6,10 @@ const Button = ({content, image, option}) => {
     const UpdateCount = (option) => {
         fetch("http://localhost:4000/api/update_count", {
             method: "POST",
+            body: JSON.stringify({ option }),
             headers: {
-                "Content-Type": "application/json"  // Ensure the content type is set correctly
+                "Content-Type": "application/json"  // Ensure Content-Type is application/json
             },
-            body: JSON.stringify(option)  // Send the 'option' inside a JSON object
         })
         .then((res) => res.json())
         .then((data) => console.log('Success:', data))
@@ -17,8 +17,9 @@ const Button = ({content, image, option}) => {
     };
     
     
+    
     const handleClick = () => {
-        UpdateCount();
+        UpdateCount(option);
         console.log(JSON.stringify(option))
         //ProgessBar();
     }

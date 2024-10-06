@@ -147,17 +147,17 @@ app.post("/api/create/reply", async (req, res) => {
     });
 });
 
-A_count = 0
-B_count = 0
+let A_count = 0
+let B_count = 0
 app.post("/api/update_count", async(req, res) => {
-    console.log(req.body)
-    if (req.body == 'A') {
+    const {option} = req.body
+    console.log(req.body.option)
+    if (req.body === 'A') {
         A_count++;
-    }
+    }   
     else {
         B_count++;
     }
-
  })
 
 app.post("/api/progress_count", async(req, res) => {
