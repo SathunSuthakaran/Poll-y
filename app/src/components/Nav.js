@@ -28,7 +28,7 @@ const Nav = () => {
     return (
         <nav className='navbar'>
             <h2>POLL-Y</h2>
-            <ProgressBar leftPercent={leftPercent} rightPercent={rightPercent} />
+            <ProgressBar leftPercent={(leftPercent/(leftPercent+rightPercent) * 100).toFixed(2)} rightPercent={(rightPercent / (leftPercent+rightPercent) * 100).toFixed(2)} />
             <div className='navbarRight'>
                 <button onClick={signOut}>Sign out</button>
             </div>

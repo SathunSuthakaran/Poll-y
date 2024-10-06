@@ -150,9 +150,8 @@ app.post("/api/create/reply", async (req, res) => {
 let A_count = 0
 let B_count = 0
 app.post("/api/update_count", async(req, res) => {
-    const {option} = req.body
     console.log(req.body.option)
-    if (req.body === 'A') {
+    if (req.body.option === 'A') {
         A_count++;
     }   
     else {

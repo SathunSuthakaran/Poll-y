@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,11 +18,11 @@ const Button = ({content, image, option}) => {
     };
     
     
-    
+    const navigate = useNavigate();
     const handleClick = () => {
         UpdateCount(option);
         console.log(JSON.stringify(option))
-        //ProgessBar();
+        navigate("/dashboard")
     }
 
     return (
