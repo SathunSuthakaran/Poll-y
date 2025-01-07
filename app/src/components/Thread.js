@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Thread = () => {
   const [lastClickedItem, setLastClickedItem] = useState(null);
-
+  
   return (
     <main className="Thread">
       <Typography>
@@ -12,7 +12,8 @@ const Thread = () => {
       </Typography>
       <Box sx={{ minHeight: 352, minWidth: 250 }}>
         <RichTreeView
-          items={MUI_X_PRODUCTS}
+          items={MUI_X_PRODUCTS}  
+          
           onItemClick={(event, itemId) => setLastClickedItem(itemId)}
         />
       </Box>
