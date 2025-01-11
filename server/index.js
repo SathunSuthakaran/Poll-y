@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const app = express();
 const PORT = 4000;
 
@@ -17,6 +19,22 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
+mongoose.connect("mongodb://localhost:27017/usersDB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  
+  // Define User Schema
+  const userSchema = new mongoose.Schema({
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    username: { type: String, required: true },
+  });
+  
+  // Create User Model
+  const User = mongoose.model("User", userSchema);
+  
+
 //👇🏻 holds all the existing users
 const users = [];
 //👇🏻 generates a random string as ID
@@ -24,26 +42,39 @@ const generateID = () => Math.random().toString(36).substring(2, 10);
 
 app.post("/api/register", async (req, res) => {
     const { email, password, username } = req.body;
-    const id = generateID();
-    //👇🏻 ensures there is no existing user with the same credentials
-    const result = users.filter(
-        (user) => user.email === email && user.password === password
-    );
-    //👇🏻 if true
-    if (result.length === 0) {
-        const newUser = { id, email, password, username };
-        //👇🏻 adds the user to the database (array)
-        users.push(newUser);
-        //👇🏻 returns a success message
+  
+    try {
+      // Check if user already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
         return res.json({
-            message: "Account created successfully!",
+          error_message: "User already exists",
         });
+      }
+  
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      // Create and save the new user
+      const newUser = new User({
+        email,
+        password: hashedPassword,
+        username,
+      });
+  
+      await newUser.save();
+  
+      // Return success response
+      res.json({
+        message: "Account created successfully!",
+      });
+    } catch (error) {
+      console.error("Error registering user:", error);
+      res.status(500).json({
+        error_message: "An error occurred while creating the account.",
+      });
     }
-    //👇🏻 if there is an existing user
-    res.json({
-        error_message: "User already exists",
-    });
-});
+  });
 
 app.post("/api/login", (req, res) => {
     const { email, password } = req.body;
