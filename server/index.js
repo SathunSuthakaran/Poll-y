@@ -76,25 +76,44 @@ app.post("/api/register", async (req, res) => {
     }
   });
 
-app.post("/api/login", (req, res) => {
+  app.post("/api/login", async (req, res) => {
     const { email, password } = req.body;
-    //👇🏻 checks if the user exists
-    let result = users.filter(
-        (user) => user.email === email && user.password === password
-    );
-    //👇🏻 if the user doesn't exist
-    if (result.length !== 1) {
+  
+    try {
+      // Find the user by email
+      const user = await User.findOne({ email });
+  
+      if (!user) {
         return res.json({
-            error_message: "Incorrect credentials",
+          error_message: "User does not exist",
         });
+      }
+  
+      // Compare the provided password with the hashed password in the database
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+  
+      if (!isPasswordValid) {
+        return res.json({
+          error_message: "Invalid credentials",
+        });
+      }
+  
+      // Successful login
+      res.json({
+        message: "Login successful!",
+        user: {
+          email: user.email,
+          username: user.username,
+        },
+      });
+    } catch (error) {
+      console.error("Error during login:", error);
+      res.status(500).json({
+        error_message: "An error occurred during login.",
+      });
     }
-    //👇🏻 Returns the id if successfuly logged in
-    res.json({
-        message: "Login successfully",
-        id: result[0].id,
-    });
-    
-});
+  });
+  
 
 //👇🏻 holds all the posts created
 const threadList = [];
