@@ -9,7 +9,7 @@ const Button = ({content, image, option}) => {
             method: "POST",
             body: JSON.stringify({ option }),
             headers: {
-                "Content-Type": "application/json"  // Ensure Content-Type is application/json
+                "Content-Type": "application/json"
             },
         })
         .then((res) => res.json())

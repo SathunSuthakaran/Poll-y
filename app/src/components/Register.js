@@ -10,7 +10,6 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        //👇🏻 Triggers the function
         signUp();
         setEmail("");
         setUsername("");

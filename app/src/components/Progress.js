@@ -1,5 +1,5 @@
 import React from 'react';
-import '../ProgressBar.css'; // Import the CSS for styling
+import '../ProgressBar.css';
 
 const ProgressBar = ({ leftPercent, rightPercent }) => {
     const totalPercent = leftPercent + rightPercent;

@@ -4,12 +4,11 @@ import ProgressBar from "./Progress";
 
 
 const Nav = () => {
-    const [leftPercent, setLeftPercent] = useState(0);  // State for left percentage
-    const [rightPercent, setRightPercent] = useState(0); // State for right percentage
+    const [leftPercent, setLeftPercent] = useState(0);
+    const [rightPercent, setRightPercent] = useState(0);
     const navigate = useNavigate();
     const signOut = () => {
         localStorage.removeItem("_id");
-        //👇🏻 redirects to the login page
         navigate("/");
     };
     useEffect(() => {

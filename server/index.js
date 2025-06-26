@@ -24,27 +24,23 @@ mongoose.connect("mongodb://localhost:27017/usersDB", {
     useUnifiedTopology: true,
   });
   
-  // Define User Schema
   const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     username: { type: String, required: true },
   });
   
-  // Create User Model
   const User = mongoose.model("User", userSchema);
   
 
-//👇🏻 holds all the existing users
 const users = [];
-//👇🏻 generates a random string as ID
+
 const generateID = () => Math.random().toString(36).substring(2, 10);
 
 app.post("/api/register", async (req, res) => {
     const { email, password, username } = req.body;
   
     try {
-      // Check if user already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
         return res.json({
@@ -52,10 +48,8 @@ app.post("/api/register", async (req, res) => {
         });
       }
   
-      // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10);
   
-      // Create and save the new user
       const newUser = new User({
         email,
         password: hashedPassword,
@@ -64,7 +58,6 @@ app.post("/api/register", async (req, res) => {
   
       await newUser.save();
   
-      // Return success response
       res.json({
         message: "Account created successfully!",
       });
@@ -80,7 +73,6 @@ app.post("/api/register", async (req, res) => {
     const { email, password } = req.body;
   
     try {
-      // Find the user by email
       const user = await User.findOne({ email });
   
       if (!user) {
@@ -89,7 +81,6 @@ app.post("/api/register", async (req, res) => {
         });
       }
   
-      // Compare the provided password with the hashed password in the database
       const isPasswordValid = await bcrypt.compare(password, user.password);
   
       if (!isPasswordValid) {
@@ -97,8 +88,6 @@ app.post("/api/register", async (req, res) => {
           error_message: "Invalid credentials",
         });
       }
-  
-      // Successful login
       res.json({
         message: "Login successful!",
         user: {
@@ -115,14 +104,12 @@ app.post("/api/register", async (req, res) => {
   });
   
 
-//👇🏻 holds all the posts created
 const threadList = [];
 
 app.post("/api/create/thread", async (req, res) => {
 const { thread, userId } = req.body;
 const threadId = generateID();
 
-    //👇🏻 add post details to the array
     threadList.unshift({
         id: threadId,
         title: thread,
@@ -131,7 +118,6 @@ const threadId = generateID();
         likes: [],
     });
 
-    //👇🏻 Returns a response containing the posts
     res.json({
         message: "Thread created successfully!",
         threads: threadList,
@@ -145,33 +131,24 @@ app.get("/api/all/threads", (req, res) => {
 });
 
 app.post("/api/thread/like", (req, res) => {
-    //👇🏻 accepts the post id and the user id
     const { threadId, userId } = req.body;
-    //👇🏻 gets the reacted post
     const result = threadList.filter((thread) => thread.id === threadId);
-    //👇🏻 gets the likes property
     const threadLikes = result[0].likes;
-    //👇🏻 authenticates the reaction
     const authenticateReaction = threadLikes.filter((user) => user === userId);
-    //👇🏻 adds the users to the likes array
     if (authenticateReaction.length === 0) {
         threadLikes.push(userId);
         return res.json({
             message: "You've reacted to the post!",
         });
     }
-    //👇🏻 Returns an error user has reacted to the post earlier
     res.json({
         error_message: "You can only react once!",
     });
 });
 
 app.post("/api/thread/replies", (req, res) => {
-    //👇🏻 The post ID
     const { id } = req.body;
-    //👇🏻 searches for the post
     const result = threadList.filter((thread) => thread.id === id);
-    //👇🏻 return the title and replies
     res.json({
         replies: result[0].replies,
         title: result[0].title,
@@ -179,13 +156,9 @@ app.post("/api/thread/replies", (req, res) => {
 });
 
 app.post("/api/create/reply", async (req, res) => {
-    //👇🏻 accepts the post id, user id, and reply
     const { id, userId, reply } = req.body;
-    //👇🏻 search for the exact post that was replied to
     const result = threadList.filter((thread) => thread.id === id);
-    //👇🏻 search for the user via its id
     const user = users.filter((user) => user.id === userId);
-    //👇🏻 saves the user name and reply
     result[0].replies.unshift({
         userId: user[0].id,
         name: user[0].username,
